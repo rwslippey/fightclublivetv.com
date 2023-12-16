@@ -1,12 +1,15 @@
 <template>
     <div>
+
         <div class="max-w-sm rounded overflow-hidden shadown-lg">
-            <a :href="productLink"><img class="w-full" :src="coverImage" alt="Sunset in the mountains"></a>
+
+            <a :href="productLink"><img class="w-full rounded-lg " :src="coverImage" alt="Sunset in the mountains"></a>
+
             <div class="px-6 py-4">
-                <div class="font-bold text-xl mb-2">{{ product.name }} </div>
-                <div class="font-bold text-lg mb-2">{{ displayDate }} | {{ displayTime }}</div>
+                <div class="text-white font-bold text-xl mb-2">{{ product.name }} </div>
+                <div class="text-white font-bold text-lg mb-2">{{ displayDate }} | {{ displayTime }}</div>
                 
-                <div class="text-md mb-2">
+                <div class="text-white text-md mb-2">
                     <span>Kickboxing </span>
                     <span>Muay Thai</span>
                 </div>

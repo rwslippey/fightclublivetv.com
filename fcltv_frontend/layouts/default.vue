@@ -1,21 +1,14 @@
 <template>
-    <div>
-        <header class="shadow-sm bg-white">
-            <nav>
-                <NuxtLink to="/">Logo</NuxtLink>
-                <ul>
-                    <li><NuxtLink to="/">Home</NuxtLink></li>
-                    <li><NuxtLink to="/watch">Watch</NuxtLink></li>
-                    <li><NuxtLink to="/about">About</NuxtLink></li>
-                </ul>
-            </nav>
-        </header>
+<body class="bg-gray-950 px-10 font-mono">
 
+    <div>
+        <Navbar />
         <!--- Output the page content -->
         <div>
             <slot />
         </div>
     </div>
+    </body>
 </template>
 <style scoped>
     .router-link-exact-active {
