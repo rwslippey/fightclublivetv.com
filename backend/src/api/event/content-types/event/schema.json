@@ -61,6 +61,18 @@
     },
     "inPersonTicketsUrl": {
       "type": "string"
+    },
+    "video": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::video.video",
+      "mappedBy": "event"
+    },
+    "auth": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::auth.auth",
+      "inversedBy": "events"
     }
   }
 }

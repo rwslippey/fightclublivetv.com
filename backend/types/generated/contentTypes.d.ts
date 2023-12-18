@@ -660,6 +660,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    auth: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::auth.auth'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -673,6 +678,36 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAuthAuth extends Schema.CollectionType {
+  collectionName: 'auths';
+  info: {
+    singularName: 'auth';
+    pluralName: 'auths';
+    displayName: 'auth';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::auth.auth',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    events: Attribute.Relation<
+      'api::auth.auth',
+      'oneToMany',
+      'api::event.event'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::auth.auth', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::auth.auth', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -742,6 +777,12 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'api::category.category'
     >;
     inPersonTicketsUrl: Attribute.String;
+    video: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'api::video.video'
+    >;
+    auth: Attribute.Relation<'api::event.event', 'manyToOne', 'api::auth.auth'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -797,6 +838,43 @@ export interface ApiPromoterPromoter extends Schema.CollectionType {
   };
 }
 
+export interface ApiVideoVideo extends Schema.CollectionType {
+  collectionName: 'videos';
+  info: {
+    singularName: 'video';
+    pluralName: 'videos';
+    displayName: 'video';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    event: Attribute.Relation<
+      'api::video.video',
+      'oneToOne',
+      'api::event.event'
+    >;
+    cdnURL: Attribute.String & Attribute.Unique;
+    liveURL: Attribute.String;
+    isLive: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::video.video',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::video.video',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -813,9 +891,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::auth.auth': ApiAuthAuth;
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;
       'api::promoter.promoter': ApiPromoterPromoter;
+      'api::video.video': ApiVideoVideo;
     }
   }
 }

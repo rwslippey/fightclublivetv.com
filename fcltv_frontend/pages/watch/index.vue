@@ -1,8 +1,10 @@
 <template>
+<div>
     <div class="grid sm:grid-cols-4 gap-7">
        <eventCard v-for="thisEvent in product" :product="thisEvent"/>
        <eventCard v-for="thisEvent in product" :product="thisEvent"/>
     </div>
+</div>
 </template>
 
 <script setup>

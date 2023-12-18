@@ -3,8 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules:['@nuxtjs/tailwindcss','@nuxtjs/strapi'],
   strapi: {
-    entited: ['events','promoters'],
-    url: 'http://localhost:1337'
+    url: 'http://localhost:1337',
+    version: 'v4',
+    prefix: '/api'
   },
   app: {
     head: {
