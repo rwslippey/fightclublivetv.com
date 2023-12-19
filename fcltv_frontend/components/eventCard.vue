@@ -20,7 +20,7 @@
 <script setup>
     const { product } = defineProps(['product'])
 
-    const coverImage = 'http://localhost:1337' + product.cover_image.url
+    const coverImage = 'http://localhost:1337' + product.cardImage.url
     const eventDate = new Date(product.date)
     const displayDate = eventDate.toLocaleDateString('en-US', {month:'short', day:'numeric'})
 
