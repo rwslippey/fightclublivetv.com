@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bouts",
+  "info": {
+    "singularName": "bout",
+    "pluralName": "bouts",
+    "displayName": "bout"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "weightClass": {
+      "type": "string"
+    },
+    "title": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "titleName": {
+      "type": "string"
+    }
+  }
+}

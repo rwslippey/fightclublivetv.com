@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "venues",
+  "info": {
+    "singularName": "venue",
+    "pluralName": "venues",
+    "displayName": "venue",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "locationName": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "streetAddress": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "addressLocality": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "postalCode": {
+      "type": "biginteger",
+      "required": true,
+      "unique": false
+    },
+    "addressRegion": {
+      "type": "string",
+      "required": true,
+      "maxLength": 2,
+      "minLength": 2
+    },
+    "addressCountry": {
+      "type": "string",
+      "required": true,
+      "maxLength": 2,
+      "minLength": 2,
+      "default": "US"
+    }
+  }
+}

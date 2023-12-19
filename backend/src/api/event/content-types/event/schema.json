@@ -32,19 +32,13 @@
     "date": {
       "type": "datetime"
     },
-    "cover_image": {
+    "cardImage": {
       "type": "media",
       "multiple": false,
       "required": true,
       "allowedTypes": [
         "images"
       ]
-    },
-    "promoter": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::promoter.promoter",
-      "inversedBy": "events"
     },
     "meta_title": {
       "type": "string",
@@ -73,6 +67,21 @@
       "relation": "manyToOne",
       "target": "api::auth.auth",
       "inversedBy": "events"
+    },
+    "promoter": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::promoter.promoter"
+    },
+    "venue": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::venue.venue"
+    },
+    "bouts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bout.bout"
     }
   }
 }

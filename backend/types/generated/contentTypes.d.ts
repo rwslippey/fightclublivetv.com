@@ -712,6 +712,31 @@ export interface ApiAuthAuth extends Schema.CollectionType {
   };
 }
 
+export interface ApiBoutBout extends Schema.CollectionType {
+  collectionName: 'bouts';
+  info: {
+    singularName: 'bout';
+    pluralName: 'bouts';
+    displayName: 'bout';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    weightClass: Attribute.String;
+    title: Attribute.Boolean;
+    type: Attribute.String;
+    titleName: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::bout.bout', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::bout.bout', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Schema.CollectionType {
   collectionName: 'categories';
   info: {
@@ -763,12 +788,7 @@ export interface ApiEventEvent extends Schema.CollectionType {
     description: Attribute.Blocks;
     price: Attribute.Decimal & Attribute.Required;
     date: Attribute.DateTime;
-    cover_image: Attribute.Media & Attribute.Required;
-    promoter: Attribute.Relation<
-      'api::event.event',
-      'manyToOne',
-      'api::promoter.promoter'
-    >;
+    cardImage: Attribute.Media & Attribute.Required;
     meta_title: Attribute.String & Attribute.Required;
     meta_description: Attribute.Text;
     categories: Attribute.Relation<
@@ -783,6 +803,21 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'api::video.video'
     >;
     auth: Attribute.Relation<'api::event.event', 'manyToOne', 'api::auth.auth'>;
+    promoter: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'api::promoter.promoter'
+    >;
+    venue: Attribute.Relation<
+      'api::event.event',
+      'oneToOne',
+      'api::venue.venue'
+    >;
+    bouts: Attribute.Relation<
+      'api::event.event',
+      'oneToMany',
+      'api::bout.bout'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -816,11 +851,6 @@ export interface ApiPromoterPromoter extends Schema.CollectionType {
     promoter_name: Attribute.String & Attribute.Required & Attribute.Unique;
     promoter_description: Attribute.Blocks;
     promoter_url: Attribute.String;
-    events: Attribute.Relation<
-      'api::promoter.promoter',
-      'oneToMany',
-      'api::event.event'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -831,6 +861,52 @@ export interface ApiPromoterPromoter extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::promoter.promoter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVenueVenue extends Schema.CollectionType {
+  collectionName: 'venues';
+  info: {
+    singularName: 'venue';
+    pluralName: 'venues';
+    displayName: 'venue';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    locationName: Attribute.String & Attribute.Required & Attribute.Unique;
+    streetAddress: Attribute.String & Attribute.Required & Attribute.Unique;
+    addressLocality: Attribute.String & Attribute.Required & Attribute.Unique;
+    postalCode: Attribute.BigInteger & Attribute.Required;
+    addressRegion: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 2;
+      }>;
+    addressCountry: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 2;
+      }> &
+      Attribute.DefaultTo<'US'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::venue.venue',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::venue.venue',
       'oneToOne',
       'admin::user'
     > &
@@ -892,9 +968,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::auth.auth': ApiAuthAuth;
+      'api::bout.bout': ApiBoutBout;
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;
       'api::promoter.promoter': ApiPromoterPromoter;
+      'api::venue.venue': ApiVenueVenue;
       'api::video.video': ApiVideoVideo;
     }
   }
