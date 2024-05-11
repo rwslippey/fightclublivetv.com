@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fighters",
+  "info": {
+    "singularName": "fighter",
+    "pluralName": "fighters",
+    "displayName": "Fighter"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "first_name": {
+      "type": "string",
+      "required": true
+    },
+    "last_name": {
+      "type": "string",
+      "required": true
+    },
+    "stage_name": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "date",
+      "required": true
+    },
+    "weight": {
+      "type": "integer"
+    },
+    "country": {
+      "type": "enumeration",
+      "enum": [
+        "United States",
+        "Canada",
+        "Mexico"
+      ],
+      "required": true
+    },
+    "height": {
+      "type": "decimal",
+      "required": true
+    },
+    "debut": {
+      "type": "date"
+    },
+    "Sport": {
+      "type": "enumeration",
+      "enum": [
+        "Kickboxing",
+        "Wrestling",
+        "Muay Thai",
+        "Boxing"
+      ]
+    },
+    "events": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event.event",
+      "mappedBy": "fighter"
+    }
+  }
+}

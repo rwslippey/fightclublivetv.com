@@ -818,6 +818,11 @@ export interface ApiEventEvent extends Schema.CollectionType {
       'oneToMany',
       'api::bout.bout'
     >;
+    fighter: Attribute.Relation<
+      'api::event.event',
+      'manyToOne',
+      'api::fighter.fighter'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -829,6 +834,52 @@ export interface ApiEventEvent extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::event.event',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFighterFighter extends Schema.CollectionType {
+  collectionName: 'fighters';
+  info: {
+    singularName: 'fighter';
+    pluralName: 'fighters';
+    displayName: 'Fighter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    first_name: Attribute.String & Attribute.Required;
+    last_name: Attribute.String & Attribute.Required;
+    stage_name: Attribute.String;
+    birthday: Attribute.Date & Attribute.Required;
+    weight: Attribute.Integer;
+    country: Attribute.Enumeration<['United States', 'Canada', 'Mexico']> &
+      Attribute.Required;
+    height: Attribute.Decimal & Attribute.Required;
+    debut: Attribute.Date;
+    Sport: Attribute.Enumeration<
+      ['Kickboxing', 'Wrestling', 'Muay Thai', 'Boxing']
+    >;
+    events: Attribute.Relation<
+      'api::fighter.fighter',
+      'oneToMany',
+      'api::event.event'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::fighter.fighter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::fighter.fighter',
       'oneToOne',
       'admin::user'
     > &
@@ -971,6 +1022,7 @@ declare module '@strapi/types' {
       'api::bout.bout': ApiBoutBout;
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;
+      'api::fighter.fighter': ApiFighterFighter;
       'api::promoter.promoter': ApiPromoterPromoter;
       'api::venue.venue': ApiVenueVenue;
       'api::video.video': ApiVideoVideo;
