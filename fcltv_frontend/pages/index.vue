@@ -18,7 +18,6 @@
 
 <script setup>
     const todayDate = new Date()
-    const { find } = useStrapi()
     const { data: product} = await $fetch('http://localhost:1337/api/events/?filters[date][$gte]='+ todayDate.toISOString() + '&populate=*')
     
     const { data: pastProducts } = await $fetch('http://localhost:1337/api/events/?filters[date][lte]='+ todayDate.toISOString() + '&populate=*')

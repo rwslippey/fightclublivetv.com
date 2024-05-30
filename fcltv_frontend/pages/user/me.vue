@@ -1,10 +1,9 @@
 <template>
     <div class="text-white">
-        {{ user.username }}
-        {{ user.email }}
+test
     </div>
 </template>
 <script setup>
-const user = useStrapiUser()
+
 
 </script>

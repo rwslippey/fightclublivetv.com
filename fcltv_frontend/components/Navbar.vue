@@ -22,16 +22,17 @@
         <NuxtLink to="/about" class="links block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-400 mr-4">About</NuxtLink>
         <NuxtLink to="/contact" class="links block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-gray-400 mr-4">Contact</NuxtLink>
     </div>
-    
+
     <div v-if="user == null">
       <NuxtLink to="../signup" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-gray-500 mt-4 lg:mt-0">Signup</NuxtLink>
       <NuxtLink to="../login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-gray-500 mt-4 lg:mt-0">Login</NuxtLink>
     </div>
+
     <div class="text-white" v-else>
-      <p>Hi <NuxtLink to="./user/me/"> {{ user.username }}</NuxtLink> </p>
+      <p>Hi <NuxtLink to="./user/me/"> {{ user.email }}</NuxtLink> </p> 
       <button @click="onClick()" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-gray-500 mt-4 lg:mt-0">Logout</button>
+      
     </div>
-    
   </div>
 
 </nav>
@@ -39,16 +40,7 @@
 </template>
 <script setup>
 import ClientMobileMenu from "./clientMobileMenu.vue";
+const user = useSupabaseUser();
 
-const user = useStrapiUser()
 
-
-const { logout } = useStrapiAuth()
-const router = useRouter()
-
-const onClick = () => {
-  logout()
-
-  router.push('/')
-}
 </script>

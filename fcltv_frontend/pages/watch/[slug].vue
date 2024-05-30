@@ -32,7 +32,6 @@
 
     const { slug } = useRoute().params // Gets paramaters from the route
     const { findOne } = useStrapi()
-    const user = useStrapiUser()
 
     const { data: product} = await $fetch("http://localhost:1337/api/events/?filters[slug][$eq]=" + slug)
     const { data: productDetails } = await findOne('events', product[0].id, { populate: '*'})

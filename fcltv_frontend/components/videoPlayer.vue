@@ -15,7 +15,6 @@
 </template>
 <script setup>
     const { findOne } = useStrapi()
-    const { userToken } = useStrapiToken()
     const { product } = defineProps(['product'])
    // console.log(product)
 

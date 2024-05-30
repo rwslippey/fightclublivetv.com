@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules:['@nuxtjs/tailwindcss','@nuxtjs/strapi','@nuxtseo/module'],
+  modules:['@nuxtjs/tailwindcss','@nuxtjs/strapi','@nuxtseo/module','@nuxtjs/supabase'],
   strapi: {
     url: 'http://localhost:1337',
     version: 'v4',
@@ -12,5 +12,8 @@ export default defineNuxtConfig({
     name: 'Fight Club Live TV',
     description: 'Combat sports at your fingertips',
     language: 'en-US'
+  },
+  supabase: {
+    redirect: false,
   }
 })

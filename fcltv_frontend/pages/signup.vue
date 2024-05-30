@@ -1,24 +1,13 @@
 <template>
      <div class="text-white w-4/5 mx-auto md:w-1/2 text-center my-12">
-       <div v-show="error !== ''" class="text-white p-3 border">
-         <p>{{ error }}</p>
-       </div>
        <h1 class="text-gray-900 font-bold text-2xl md:text-4xl mt-5">Signup</h1>
-<form @submit.prevent="onSubmit">
+<form @submit.prevent="signUp">
          <div class="text-gray-900" >
            <input
              v-model="email"
              class="p-3 my-5 border w-full"
              type="email"
              placeholder="email"
-           />
-         </div>
-         <div class="text-gray-900">
-           <input
-             v-model="username"
-             class="p-3 my-5 border w-full"
-             type="text"
-             placeholder="username"
            />
          </div>
          <div class="text-gray-900">
@@ -37,21 +26,28 @@
          </div>
 </form>
      </div>
-     <p class="text-white">{{ email }}, {{ password }}, {{ username }}</p>
         </template>
 
 
 <script setup>
-  const { register } = useStrapiAuth()
-  const router = useRouter()
-  const email = ref('')
-  const username = ref('')
-  const password = ref('')
+  const client = useSupabaseClient();
+  const email = ref("")
+  const password = ref(null)
+  const errorMsg = ref(null);
+  const successMsg = ref(null);
   
-  async function onSubmit(){
+  async function signUp() {
     try {
-      await register({username: username.value, email: email.value, password: password.value})
-    } catch (e){}
+      const { data, error } = await client.auth.signUp({
+        email: email.value,
+        password: password.value,
+    });
+    if (error) throw error;
+    successMsg.value = "Check your email to confirm your account";
+  } catch (error) {
+    errorMsg.value = error.message;
+  }
+
   }
 </script>
 <style></style>
